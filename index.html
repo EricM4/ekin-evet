@@ -204,11 +204,11 @@
     <path class="spark s2" d="M28 22 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z" fill="#fff"/>
     <path class="spark s3" d="M92 50 l1.2 3.2 3.2 1.2 -3.2 1.2 -1.2 3.2 -1.2 -3.2 -3.2 -1.2 3.2 -1.2z" fill="#fff1b8"/>
   </svg>
-  <h1 class="q"><em id="askName">Ekin</em>,<br>will you marry me?</h1>
-  <p class="sub">Benimle evlenir misin?<br>Vrei să fii soția mea?</p>
+  <h1 class="q"><em id="askName">Ekin</em>,<br>benimle evlen.</h1>
+  <p class="sub">Marry me.<br>Căsătorește-te cu mine.</p>
   <div class="btns">
-    <button id="yes">Yes 💍</button>
-    <button id="no">No</button>
+    <button id="yes">Evet 💍</button>
+    <button id="no">Hayır</button>
   </div>
 </section>
 
@@ -304,7 +304,8 @@ const slides = [
   `<h2>And now I hear<br>someone wants a <b>ring</b>…</h2><p class="emoji">👀</p>`,
   `<h2>Because when you know,<br>you know.</h2>`,
   `<h2 class="love"><span>Seni seviyorum.</span><span>Te iubesc.</span><span>I love you.</span></h2>`,
-  `<h2>So there's just one thing<br>left to ask you…</h2>`
+  `<h2>A week ago you told me<br>exactly what you want to hear.</h2><p>I remembered. 😌</p>`,
+  `<h2>So I'm not asking.<br><b>I'm telling you.</b></h2><p class="emoji">💍</p>`
 ];
 let si = 0, busy = false;
 const st = $('#storyText'), dots = $('#dots');
@@ -371,7 +372,7 @@ function initScratch(){
 }
 
 // the "No" button that refuses to be pressed
-const noTexts = ["No","Are you sure?","Hayır? 🥺",`${CONFIG.herName}…`,"Think again 😌","Wrong button!","Try the other one 💕"];
+const noTexts = ["Hayır","Are you sure?","Emin misin? 🥺",`${CONFIG.herName}…`,"Think again 😌","Wrong button!","Try the other one 💕"];
 let tries = 0, yesScale = 1;
 const yesBtn = $('#yes'), noBtn = $('#no');
 function overlaps(a, b){ return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom); }
@@ -412,8 +413,8 @@ yesBtn.addEventListener('click', () => {
 });
 $('#again').addEventListener('click', () => {
   tries = 0; yesScale = 1;
-  yesBtn.textContent = 'Yes 💍'; yesBtn.style.transform = '';
-  noBtn.textContent = 'No'; noBtn.style.cssText = '';
+  yesBtn.textContent = 'Evet 💍'; yesBtn.style.transform = '';
+  noBtn.textContent = 'Hayır'; noBtn.style.cssText = '';
   show('intro');
 });
 
