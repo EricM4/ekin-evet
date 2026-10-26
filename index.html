@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For Ekin 💌</title>
+<meta name="description" content="Something I need to ask you…">
+<meta property="og:title" content="For Ekin 💌">
+<meta property="og:description" content="Something I need to ask you…">
+<meta name="theme-color" content="#3a0b1e">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#3a0b1e; --deep:#1d0410; --rose:#e8456b; --rose2:#ff7a9a;
+    --blush:#ffd6e0; --gold:#f3c969; --cream:#fff7f2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'DM Sans',system-ui,sans-serif;
+    color:var(--cream);
+    background:radial-gradient(ellipse at 50% 0%,#7a1838 0%,var(--wine) 55%,var(--deep) 100%);
+    background-color:var(--wine);
+    overflow:hidden;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;-webkit-user-select:none;
+  }
+  .serif{font-family:'Cormorant Garamond',Georgia,serif}
+
+  /* floating background hearts */
+  #bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .fh{position:absolute;bottom:-40px;opacity:0;animation:rise linear infinite}
+  @keyframes rise{
+    0%{transform:translateY(0) rotate(0);opacity:0}
+    10%{opacity:.45}
+    100%{transform:translateY(-115vh) rotate(35deg);opacity:0}
+  }
+
+  .screen{
+    position:fixed;inset:0;z-index:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:max(24px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));
+    text-align:center;opacity:0;pointer-events:none;transition:opacity .9s ease;
+  }
+  .screen.active{opacity:1;pointer-events:auto}
+
+  /* intro */
+  .kicker{letter-spacing:.28em;text-transform:uppercase;font-size:12px;color:var(--blush);opacity:.8}
+  .intro-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(64px,20vw,120px);line-height:1;margin:14px 0 30px;
+    background:linear-gradient(180deg,#fff 0%,var(--blush) 60%,var(--rose2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .seal{
+    width:110px;height:110px;border-radius:50%;border:none;cursor:pointer;
+    background:radial-gradient(circle at 35% 30%,var(--rose2),var(--rose) 55%,#a51c3f);
+    box-shadow:0 0 0 8px rgba(232,69,107,.15),0 0 60px rgba(232,69,107,.6);
+    display:grid;place-items:center;animation:beat 1.4s ease-in-out infinite;
+  }
+  .seal svg{width:52px;height:52px}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.12)}30%{transform:scale(1)}45%{transform:scale(1.08)}}
+  .hint{margin-top:22px;font-size:14px;opacity:.65}
+
+  /* story */
+  #story{cursor:pointer}
+  #storyText{max-width:520px;transition:opacity .45s ease,transform .45s ease;opacity:0;transform:translateY(12px)}
+  #storyText.in{opacity:1;transform:none}
+  #storyText h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,9vw,54px);line-height:1.15}
+  #storyText h2 i{color:var(--blush)}
+  #storyText b{color:var(--gold);font-weight:600}
+  #storyText p{margin-top:16px;font-size:17px;opacity:.75}
+  #storyText .pre{font-size:13px;letter-spacing:.25em;text-transform:uppercase;color:var(--blush);opacity:.75;margin:0 0 14px}
+  #storyText .emoji{font-size:54px;margin-top:18px;opacity:1}
+  .love{line-height:1.3!important}
+  .love span{display:block}
+  .love span:nth-child(1){color:#ffb3c4}
+  .love span:nth-child(2){color:var(--gold)}
+  .dots{position:fixed;bottom:max(28px,env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:8px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:var(--cream);opacity:.25;transition:.3s}
+  .dots i.on{opacity:1;background:var(--rose2);width:20px;border-radius:4px}
+  .tap{position:fixed;bottom:calc(max(28px,env(safe-area-inset-bottom)) + 22px);left:0;right:0;font-size:13px;opacity:.45}
+
+  .flags{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:22px}
+  .flag{width:48px;height:32px;border-radius:4px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  .flags .h{color:var(--rose2);font-size:22px}
+
+  .cnt{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(340px,88vw);margin:0 auto}
+  .cnt div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 2px 10px}
+  .cnt b{display:block;font-family:'Cormorant Garamond',serif;font-size:42px;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+  .cnt span{display:block;margin-top:6px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+
+  /* scratch */
+  .scr-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,8vw,44px);margin:12px 0 26px}
+  .scard{position:relative;width:min(300px,84vw);height:200px;border-radius:18px;overflow:hidden;
+    box-shadow:0 18px 40px rgba(0,0,0,.45);background:linear-gradient(160deg,#5a1230,#2a0716)}
+  .scard .under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:17px}
+  .big-ring{font-size:76px;filter:drop-shadow(0 0 18px rgba(243,201,105,.6))}
+  #scratchCv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .8s ease}
+  .engaged{margin-top:14px;font-size:14px;opacity:.8;letter-spacing:.04em}
+
+  /* question */
+  .ring{width:150px;height:150px;filter:drop-shadow(0 0 24px rgba(243,201,105,.45));animation:float 3.5s ease-in-out infinite}
+  #ask.active .ring{animation:drop 1.2s cubic-bezier(.2,1.4,.4,1) both,float 3.5s ease-in-out 1.2s infinite}
+  @keyframes drop{from{transform:translateY(-60px) scale(.6);opacity:0}to{transform:none;opacity:1}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .spark{animation:twinkle 1.8s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  .spark.s2{animation-delay:.6s}.spark.s3{animation-delay:1.2s}
+  @keyframes twinkle{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1)}}
+  .q{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(40px,11vw,68px);line-height:1.08;margin-top:18px}
+  .q em{color:var(--blush)}
+  .sub{margin-top:14px;font-size:15px;opacity:.75;line-height:1.6}
+  .btns{margin-top:34px;display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;min-height:70px}
+  button{font-family:inherit}
+  #yes{
+    border:none;cursor:pointer;color:#fff;font-weight:700;font-size:19px;
+    padding:16px 40px;border-radius:999px;
+    background:linear-gradient(135deg,var(--rose2),var(--rose));
+    box-shadow:0 10px 30px rgba(232,69,107,.5);
+    transition:transform .35s cubic-bezier(.2,1.6,.4,1);
+  }
+  #no{
+    cursor:pointer;color:var(--cream);font-size:16px;font-weight:500;
+    padding:14px 28px;border-radius:999px;background:transparent;
+    border:1.5px solid rgba(255,247,242,.35);
+    transition:left .25s ease,top .25s ease;white-space:nowrap;z-index:5;
+  }
+
+  /* celebration */
+  #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+  #celebrate > *:not(canvas){position:relative;z-index:1}
+  .date{font-size:13px;letter-spacing:.25em;text-transform:uppercase;opacity:.7}
+  .big{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(68px,22vw,130px);line-height:1;margin:10px 0 4px;
+    background:linear-gradient(180deg,#fff7d6,var(--gold) 60%,#c99430);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .said{font-size:18px;opacity:.85}
+  .names{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(40px,12vw,64px);margin-top:26px}
+  .names .amp{color:var(--rose2)}
+  .final{margin-top:24px;font-size:18px;max-width:420px;line-height:1.5}
+  .polaroid{margin-top:26px;background:#fff7f2;padding:10px 10px 0;border-radius:4px;transform:rotate(-3deg);
+    box-shadow:0 14px 34px rgba(0,0,0,.45);width:min(210px,58vw)}
+  .polaroid .ph{aspect-ratio:1;border:2px dashed #e8456b;border-radius:2px;display:grid;place-items:center;
+    background:repeating-linear-gradient(45deg,#ffe9ef 0 10px,#fff3f6 10px 20px);color:#e8456b;font-size:38px}
+  .polaroid .cap{font-family:'Cormorant Garamond',serif;font-style:italic;color:#3a0b1e;font-size:19px;padding:10px 4px 12px;line-height:1.2}
+  .polaroid .cap small{display:block;font-family:'DM Sans',sans-serif;font-style:normal;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;margin-top:4px}
+  #tell{display:inline-block;margin-top:26px;text-decoration:none;color:#fff;font-weight:700;font-size:17px;padding:14px 30px;border-radius:999px;
+    background:linear-gradient(135deg,#25d366,#128c4a);box-shadow:0 10px 30px rgba(37,211,102,.35)}
+  #celebrate{overflow-y:auto;justify-content:safe center}
+  #again{margin-top:22px;background:transparent;border:1px solid rgba(255,247,242,.3);color:var(--cream);opacity:.7;
+    padding:10px 22px;border-radius:999px;font-size:14px;cursor:pointer}
+
+  @media (prefers-reduced-motion:reduce){
+    .fh,.seal,.ring,.spark{animation:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+
+<!-- 1. Intro -->
+<section id="intro" class="screen active">
+  <p class="kicker">A message for</p>
+  <h1 class="intro-name" id="introName">Ekin</h1>
+  <button class="seal" id="openBtn" aria-label="Open">
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.6 2.3 4.5 6.1 4.5c2.2 0 3.9 1.3 5.9 3.6 2-2.3 3.7-3.6 5.9-3.6 3.8 0 5.7 4.1 4.1 7.2C19.5 16.4 12 21 12 21z"/></svg>
+  </button>
+  <p class="hint">tap the heart</p>
+</section>
+
+<!-- 2. Story -->
+<section id="story" class="screen">
+  <div id="storyText"></div>
+  <p class="tap">tap to continue</p>
+  <div class="dots" id="dots"></div>
+</section>
+
+<!-- 2b. Scratch card -->
+<section id="scratch" class="screen">
+  <p class="kicker">One more thing</p>
+  <h2 class="scr-title">I hid something for you here…</h2>
+  <div class="scard">
+    <div class="under"><span class="big-ring">💍</span><span>It's yours, if you want it.</span></div>
+    <canvas id="scratchCv"></canvas>
+  </div>
+  <p class="hint">scratch the gold with your finger</p>
+</section>
+
+<!-- 3. The question -->
+<section id="ask" class="screen">
+  <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff1b8"/><stop offset=".5" stop-color="#f3c969"/><stop offset="1" stop-color="#b8862b"/>
+      </linearGradient>
+      <linearGradient id="dia" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bfe6ff"/>
+      </linearGradient>
+    </defs>
+    <circle cx="60" cy="82" r="30" fill="none" stroke="url(#gold)" stroke-width="7"/>
+    <polygon points="46,26 74,26 82,34 60,53 38,34" fill="url(#dia)" stroke="#fff" stroke-width=".8"/>
+    <polyline points="38,34 82,34" fill="none" stroke="#9fd3f5" stroke-width=".7"/>
+    <polyline points="52,26 48,34 60,53 72,34 68,26" fill="none" stroke="#9fd3f5" stroke-width=".7"/>
+    <polyline points="48,34 60,26 72,34" fill="none" stroke="#9fd3f5" stroke-width=".7"/>
+    <path class="spark" d="M88 18 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill="#fff"/>
+    <path class="spark s2" d="M28 22 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z" fill="#fff"/>
+    <path class="spark s3" d="M92 50 l1.2 3.2 3.2 1.2 -3.2 1.2 -1.2 3.2 -1.2 -3.2 -3.2 -1.2 3.2 -1.2z" fill="#fff1b8"/>
+  </svg>
+  <h1 class="q"><em id="askName">Ekin</em>,<br>will you marry me?</h1>
+  <p class="sub">Benimle evlenir misin?<br>Vrei să fii soția mea?</p>
+  <div class="btns">
+    <button id="yes">Yes 💍</button>
+    <button id="no">No</button>
+  </div>
+</section>
+
+<!-- 4. Celebration -->
+<section id="celebrate" class="screen">
+  <canvas id="confetti"></canvas>
+  <p class="date" id="today"></p>
+  <h1 class="big">Evet!</h1>
+  <p class="said">You said yes. 🥹</p>
+  <div class="names"><span id="n1">Ekin</span> <span class="amp">&amp;</span> <span id="n2">Eric</span></div>
+  <div class="flags" id="flagsEnd"></div>
+  <p class="engaged" id="engaged"></p>
+  <div class="polaroid">
+    <div class="ph">♥</div>
+    <div class="cap">our first photo together<small>coming soon</small></div>
+  </div>
+  <p class="final" id="finalMsg"></p>
+  <a id="tell" target="_blank" rel="noopener">Tell Eric 💬</a>
+  <button id="again">♥ replay</button>
+</section>
+
+<script>
+/* ================== EDIT HERE ================== */
+const CONFIG = {
+  herName:  "Ekin",
+  yourName: "Eric",
+  // The moment we met (UTC). 11:30 UTC = 14:30 Romania time, 14:30 Türkiye time.
+  metAt:    "2026-09-28T11:30:00Z",
+  finalMessage: "Distance is just a number between Craiova and you. The ring is coming — and so am I. ✈️💍",
+  // Your WhatsApp number in international format, digits only (e.g. "407XXXXXXXX").
+  // Leave "" to hide the "Tell Eric" button.
+  whatsapp: "40770265504",
+  replyText: "EVET! 💍 Seni seviyorum ❤️"
+};
+/* =============================================== */
+
+const $ = s => document.querySelector(s);
+function show(id){ document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id)); }
+
+const FLAG_RO = '<svg class="flag" viewBox="0 0 30 20"><rect width="10" height="20" fill="#002B7F"/><rect x="10" width="10" height="20" fill="#FCD116"/><rect x="20" width="10" height="20" fill="#CE1126"/></svg>';
+const FLAG_TR = '<svg class="flag" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.25" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="14.1,10 15.79,9.41 15.83,7.62 16.91,9.05 18.62,8.53 17.6,10 18.62,11.47 16.91,10.95 15.83,12.38 15.79,10.59"/></svg>';
+const FLAGS = `<div class="flags">${FLAG_RO}<span class="h">♥</span>${FLAG_TR}</div>`;
+
+// names
+$('#introName').textContent = CONFIG.herName;
+$('#askName').textContent = CONFIG.herName;
+$('#n1').textContent = CONFIG.herName;
+$('#n2').textContent = CONFIG.yourName;
+$('#finalMsg').textContent = CONFIG.finalMessage;
+$('#flagsEnd').outerHTML = FLAGS;
+document.title = `For ${CONFIG.herName} 💌`;
+const tell = $('#tell');
+if (CONFIG.whatsapp){
+  tell.href = `https://wa.me/${CONFIG.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(CONFIG.replyText)}`;
+  tell.textContent = `Tell ${CONFIG.yourName} 💬`;
+} else tell.remove();
+
+// background hearts
+const bg = $('#bg'), cols = ['#e8456b','#ffd6e0','#f3c969','#ff7a9a'];
+for (let i = 0; i < 20; i++){
+  const h = document.createElement('span');
+  h.className = 'fh'; h.textContent = '♥';
+  h.style.left = Math.random()*100 + '%';
+  h.style.fontSize = (10 + Math.random()*24) + 'px';
+  h.style.color = cols[i % cols.length];
+  h.style.animationDuration = (10 + Math.random()*10) + 's';
+  h.style.animationDelay = (-Math.random()*18) + 's';
+  bg.appendChild(h);
+}
+
+// story
+const MET = new Date(CONFIG.metAt).getTime();
+function since(){
+  let s = Math.max(0, Math.floor((Date.now() - MET) / 1000));
+  const d = Math.floor(s / 86400); s %= 86400;
+  const h = Math.floor(s / 3600);  s %= 3600;
+  return {d, h, m: Math.floor(s / 60), s: s % 60};
+}
+function tickCounter(){
+  const el = document.getElementById('cnt');
+  if (!el) return;
+  const t = since();
+  el.innerHTML = [[t.d,'days'],[t.h,'hours'],[t.m,'min'],[t.s,'sec']]
+    .map(([v,l]) => `<div><b>${v}</b><span>${l}</span></div>`).join('');
+}
+setInterval(tickCounter, 1000);
+const slides = [
+  `<p class="pre">Not long ago…</p><h2>a boy from <b>Romania</b><br>met a girl from <b>Türkiye</b>.</h2>${FLAGS}`,
+  `<p class="pre">We met exactly</p><div class="cnt" id="cnt"></div><p>ago. And that's all it took.</p>`,
+  `<h2>Between us:<br><b>a lot</b> of kilometres.</h2><p>Between our hearts: zero.</p><p class="emoji">📱❤️📱</p>`,
+  `<h2>You told me:<br><i>“let's take things slow.”</i></h2><p class="emoji">🐢</p>`,
+  `<h2>I tried.<br>I really did.</h2><p>(Okay… maybe not that hard.)</p>`,
+  `<h2>And now I hear<br>someone wants a <b>ring</b>…</h2><p class="emoji">👀</p>`,
+  `<h2>Because when you know,<br>you know.</h2>`,
+  `<h2 class="love"><span>Seni seviyorum.</span><span>Te iubesc.</span><span>I love you.</span></h2>`,
+  `<h2>So there's just one thing<br>left to ask you…</h2>`
+];
+let si = 0, busy = false;
+const st = $('#storyText'), dots = $('#dots');
+dots.innerHTML = slides.map(() => '<i></i>').join('');
+function renderSlide(){
+  busy = true;
+  st.classList.remove('in');
+  setTimeout(() => {
+    st.innerHTML = slides[si];
+    tickCounter();
+    [...dots.children].forEach((d, i) => d.classList.toggle('on', i === si));
+    st.classList.add('in');
+    setTimeout(() => busy = false, 450);
+  }, 400);
+}
+$('#openBtn').addEventListener('click', () => { si = 0; show('story'); renderSlide(); });
+$('#story').addEventListener('click', () => {
+  if (busy) return;
+  if (si < slides.length - 1){ si++; renderSlide(); }
+  else { show('scratch'); initScratch(); }
+});
+
+// scratch card
+let scratchDone = false;
+function initScratch(){
+  scratchDone = false;
+  const c = $('#scratchCv'), box = c.parentElement, x = c.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = box.clientWidth, h = box.clientHeight;
+  c.width = w*dpr; c.height = h*dpr; c.style.opacity = 1;
+  x.setTransform(dpr,0,0,dpr,0,0);
+  x.globalCompositeOperation = 'source-over';
+  const g = x.createLinearGradient(0,0,w,h);
+  g.addColorStop(0,'#fff1b8'); g.addColorStop(.45,'#f3c969'); g.addColorStop(.55,'#e0ad4a'); g.addColorStop(1,'#b8862b');
+  x.fillStyle = g; x.fillRect(0,0,w,h);
+  for (let i = 0; i < 140; i++){ x.fillStyle = `rgba(255,255,255,${Math.random()*.35})`; x.fillRect(Math.random()*w, Math.random()*h, 2, 2); }
+  x.fillStyle = '#5a3a08'; x.textAlign = 'center';
+  x.font = "600 italic 26px 'Cormorant Garamond', Georgia, serif";
+  x.fillText('scratch me ✨', w/2, h/2 + 8);
+  x.globalCompositeOperation = 'destination-out';
+  let down = false, last = null, moves = 0;
+  const pos = e => { const r = c.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  const line = p => {
+    x.lineWidth = 44; x.lineCap = 'round';
+    x.beginPath(); x.moveTo((last||p).x, (last||p).y); x.lineTo(p.x, p.y); x.stroke();
+    last = p;
+    if (++moves % 8 === 0) check();
+  };
+  const check = () => {
+    if (scratchDone) return;
+    const d = x.getImageData(0, 0, c.width, c.height).data;
+    let clear = 0, n = 0;
+    for (let i = 3; i < d.length; i += 64){ n++; if (d[i] < 50) clear++; }
+    if (clear / n > .5){
+      scratchDone = true;
+      c.style.opacity = 0;
+      if (navigator.vibrate) navigator.vibrate(60);
+      setTimeout(() => show('ask'), 2200);
+    }
+  };
+  c.onpointerdown = e => { down = true; last = null; c.setPointerCapture(e.pointerId); line(pos(e)); };
+  c.onpointermove = e => { if (down) line(pos(e)); };
+  c.onpointerup = c.onpointercancel = () => { down = false; check(); };
+}
+
+// the "No" button that refuses to be pressed
+const noTexts = ["No","Are you sure?","Hayır? 🥺",`${CONFIG.herName}…`,"Think again 😌","Wrong button!","Try the other one 💕"];
+let tries = 0, yesScale = 1;
+const yesBtn = $('#yes'), noBtn = $('#no');
+function overlaps(a, b){ return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom); }
+function dodge(e){
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  tries++;
+  if (tries >= 9){
+    noBtn.style.display = 'none';
+    yesBtn.textContent = 'Only one option left 😇';
+    return;
+  }
+  noBtn.textContent = noTexts[Math.min(tries, noTexts.length - 1)];
+  noBtn.style.position = 'fixed';
+  const r = noBtn.getBoundingClientRect(), pad = 16;
+  const maxX = Math.max(pad, innerWidth - r.width - pad), maxY = Math.max(pad, innerHeight - r.height - pad);
+  for (let k = 0; k < 15; k++){
+    const x = pad + Math.random()*(maxX - pad), y = pad + Math.random()*(maxY - pad);
+    const yr = yesBtn.getBoundingClientRect();
+    const cand = {left:x - 10, top:y - 10, right:x + r.width + 10, bottom:y + r.height + 10};
+    noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
+    if (!overlaps(cand, yr)) break;
+  }
+  yesScale = Math.min(yesScale + 0.12, 1.8);
+  yesBtn.style.transform = `scale(${yesScale})`;
+}
+noBtn.addEventListener('mouseenter', dodge);
+noBtn.addEventListener('pointerdown', dodge);
+noBtn.addEventListener('click', dodge);
+
+// yes!
+$('#today').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+yesBtn.addEventListener('click', () => {
+  const t = since();
+  $('#engaged').textContent = `Engaged after ${t.d} days, ${t.h} hours & ${t.m} minutes 💞`;
+  show('celebrate');
+  if (navigator.vibrate) navigator.vibrate([120, 60, 120, 60, 300]);
+  startConfetti();
+});
+$('#again').addEventListener('click', () => {
+  tries = 0; yesScale = 1;
+  yesBtn.textContent = 'Yes 💍'; yesBtn.style.transform = '';
+  noBtn.textContent = 'No'; noBtn.style.cssText = '';
+  show('intro');
+});
+
+// confetti of hearts
+let confettiRunning = false, burst;
+function startConfetti(){
+  if (confettiRunning){ burst(160, true); return; }
+  confettiRunning = true;
+  const c = $('#confetti'), x = c.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let W, H;
+  const size = () => { W = c.width = innerWidth*dpr; H = c.height = innerHeight*dpr; };
+  size(); addEventListener('resize', size);
+  const colors = ['#e8456b','#ffd6e0','#f3c969','#ffffff','#ff7a9a'];
+  const P = [];
+  burst = (n, center) => {
+    const ox = center ? W/2 : W*(.15 + Math.random()*.7);
+    const oy = center ? H*.42 : H*(.2 + Math.random()*.3);
+    for (let i = 0; i < n; i++) P.push({
+      x: ox, y: oy,
+      vx: (Math.random() - .5)*16*dpr, vy: (-Math.random()*15 - 3)*dpr,
+      s: (7 + Math.random()*11)*dpr, r: Math.random()*6, vr: (Math.random() - .5)*.2,
+      c: colors[i % colors.length], heart: Math.random() < .55
+    });
+  };
+  const heart = s => {
+    x.beginPath();
+    x.moveTo(0, s*.3);
+    x.bezierCurveTo(0, 0, -s*.5, 0, -s*.5, s*.3);
+    x.bezierCurveTo(-s*.5, s*.6, 0, s*.8, 0, s);
+    x.bezierCurveTo(0, s*.8, s*.5, s*.6, s*.5, s*.3);
+    x.bezierCurveTo(s*.5, 0, 0, 0, 0, s*.3);
+    x.fill();
+  };
+  burst(180, true);
+  let t = 0;
+  (function loop(){
+    x.clearRect(0, 0, W, H);
+    t++;
+    if (t % 80 === 0 && t < 1200) burst(45, false);
+    for (let i = P.length - 1; i >= 0; i--){
+      const p = P[i];
+      p.vy += .22*dpr; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c;
+      if (p.heart) heart(p.s); else x.fillRect(-p.s/2, -p.s/4, p.s, p.s/2);
+      x.restore();
+      if (p.y > H + 60) P.splice(i, 1);
+    }
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+</body>
+</html>
